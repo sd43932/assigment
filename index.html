@@ -1,0 +1,81 @@
+<html>  
+  <div id="main">    
+      
+      <select id="new">
+      <option>Please select</option>
+        
+    </select>
+      <br>
+         <select id="title">
+      <option>Please select</option>
+        
+    </select>
+      <br>
+ <textarea id="body" style="display:none"></textarea>
+    </div>
+
+
+</html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function(){
+    $.ajax({
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        type: "GET",
+        dataType: "jsonp",
+        async: false,
+        success: function(msg)  {
+         
+         $.each(msg, function(k, v) {
+    $('<option>').val(v.id).text(v.id).appendTo('#new');
+     
+    
+});
+          
+                        $('#new').change(function() {
+      var selectedVal  = $("#new option:selected").text() ;
+                          
+
+    if(selectedVal % 2 == 0){
+        //$("#main").append("<div id='hi'>v.id</div>")
+           for (var i = 0; i < msg.length; i++) { 
+        if (msg[i].id == selectedVal) {
+            //return(categoryArray[i].product);
+            if(selectedVal % 2 == 0){
+                   alert('hisss');
+              $('<option selected>').val(msg[i].id).text(msg[i].title).appendTo('#title');
+               $('#body').val(msg[i].body);
+                $('#body').show();
+            }
+            else {
+            alert('hi');
+                     $('<option selected>').val(msg[i].id).text(msg[i].title).appendTo('#title');
+                 $('#body').hide();
+               }
+        }
+               
+    }
+        
+ 
+      
+      }
+                            
+  
+        //$("#title").show();
+      //  $("#body").show();
+        
+
+  
+    
+  });      
+            
+        }
+    });
+       
+                 
+ 
+});
+
+
+</script>
