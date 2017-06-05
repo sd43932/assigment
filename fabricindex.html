@@ -1,17 +1,52 @@
 <html>
+       <h1>Exercise 2</h1>
 <head>
-    <script src="fabric.min.js"></script>
+    <script src="fabric/dist/fabric.min.js"></script>
 </head>
 
 <body>
-    <canvas id="canvas" width="800" height="450" style="border:1px solid #000000"></canvas>
+    <canvas id="canvas1" width="800" height="200" style="border:1px solid #000000"></canvas>
+     <canvas id="canvas2" width="800" height="200" style="border:1px solid #000000"></canvas>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
-        var canvas = new fabric.Canvas('canvas');
-        canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
+     //   var canvas = new fabric.Canvas('canvas1');
 
-        canvas.selectionColor = 'rgba(0,255,0,0.3)';
-        canvas.selectionBorderColor = 'red';
-        canvas.selectionLineWidth = 5;
+        
+        $(document).ready(function() {
+    
+    var canvases = {
+        canvas1 : new fabric.Canvas('canvas1'),
+        canvas2 : new fabric.Canvas('canvas2')
+        
+    };
+         
+        //creating circle
+        canvases.canvas1.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
+        canvases.canvas1.selectionColor = 'red';
+        canvases.canvas1.selectionBorderColor = 'red';
+        canvases.canvas1.selectionLineWidth = 5;
+    
+    var activeObject, initialCanvas;
+    
+   
+    
+    canvases.canvas1.on('mouse:down', function() {
+        if(this.getActiveObject()) {
+            activeObject  = $.extend({}, this.getActiveObject());
+            initialCanvas = this.lowerCanvasEl.id;
+        }
+    });
+    
+    $(document).on('mouseup', function(evt) {
+        if(evt.target.localName === 'canvas' && initialCanvas) {
+            canvasId = "canvas2"
+                canvases[canvasId].add(activeObject);
+                canvases[canvasId].renderAll();
+        }
+        initialCanvas = '';
+        activeObject  = {};                 
+    }); 
+        });
     </script>
 </body>
 </html>
